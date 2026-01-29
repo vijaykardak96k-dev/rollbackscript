@@ -1,0 +1,12 @@
+VERSION=$ROLLBACK_VERSION
+APP_NAME="java3"
+TOMCAT_HOME="/opt/tomcat"
+NEXUS_URL="http://192.168.133.52:8081/repository/java3/aarush/webapp/$VERSION/webapp-$VERSION.war"
+
+export BUILD_ID=dontKillMe
+sudo -n sh $TOMCAT_HOME/bin/shutdown.sh
+sudo -n rm -rf $TOMCAT_HOME/webapps/$APP_NAME
+sudo -n rm -rf $TOMCAT_HOME/webapps/$APP_NAME.war
+sudo -n curl -u admin:123 -L -f -o $TOMCAT_HOME/webapps/$APP_NAME.war "$NEXUS_URL"
+sudo -n sh $TOMCAT_HOME/bin/startup.sh
+sleep 5
